@@ -1,0 +1,11 @@
+@import '../variables.scss';
+
+.adding-floor-plans {
+    max-width: 1000px;
+    margin: auto;
+    .content {
+        display: flex;
+        gap: 20px;
+        height: 100%;
+    }
+}

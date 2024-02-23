@@ -15,12 +15,12 @@
         p {
             margin: 0;
             &.path {
-                color: $grey-400;
+                color: $grey-200;
             }
             .current {
-                color: black !important;
+                color: $grey-500;
             }
-        } 
+        }
     }
     .right {
         display: flex;

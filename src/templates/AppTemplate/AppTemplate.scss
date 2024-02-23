@@ -4,12 +4,17 @@
     display: flex;
 
     .template-content {
-        width: calc(100% - $side-menu-w );
+        width: calc(100% - $side-menu-w);
     }
 
     .page {
         min-height: calc(100% - $nav-bar-h - $footer-h - 20px * 2);
-        background-color: $grey-200;
+        background-color: $grey-100;
         padding: 20px;
+
+        h2 {
+            margin: 0 0 20px 0;
+            color: $grey-500;
+        }
     }
 }

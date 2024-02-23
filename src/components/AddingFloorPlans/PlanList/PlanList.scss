@@ -1,0 +1,42 @@
+@import '../../../variables.scss';
+
+.plan-list {
+    background-color: white;
+    width: 236px;
+    height: 450px;
+    padding: 20px 0;
+
+    .item {
+        cursor: pointer;
+        padding: 16px 20px;
+        border-right: solid 3px transparent;
+        &.active {
+            border-color: $brand-color;
+        }
+
+        .new-plan {
+            color: $grey-200;
+            height: 120px;
+            border: dashed 2px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition:
+                color 0.3s,
+                scale 0.3s;
+
+            i {
+                font-size: 30px;
+                margin: auto;
+                display: block;
+                width: max-content;
+            }
+            &:hover {
+                color: $brand-color;
+            }
+            &:active {
+                scale: 0.95;
+            }
+        }
+    }
+}
