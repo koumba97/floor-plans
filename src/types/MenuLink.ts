@@ -1,4 +1,4 @@
 export interface MenuLink {
-    icon: string,
-    route: string,
+    icon: string;
+    route: string;
 }

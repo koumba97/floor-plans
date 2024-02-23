@@ -1,4 +1,4 @@
-import { MenuLink } from "../types/MenuLink";
+import { MenuLink } from '../types/MenuLink';
 
 export const menuLinks: MenuLink[] = [
     {
@@ -32,5 +32,5 @@ export const menuLinks: MenuLink[] = [
     {
         icon: 'las la-cog',
         route: '/'
-    },
-]
+    }
+];
