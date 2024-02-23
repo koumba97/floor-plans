@@ -1,0 +1,25 @@
+@import '../../variables.scss';
+
+.side-menu {
+    background-color: $brand-color;
+    color: white;
+    padding: 40px 12px;
+    height: 100%;
+    width: 30px;
+    height: calc(100vh - 40px * 2);
+    
+    .list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    
+        a {
+            font-size: 24px;
+            color: white;
+            width: max-content;
+            margin: auto;
+            display: block;
+    
+        }
+    }
+}
