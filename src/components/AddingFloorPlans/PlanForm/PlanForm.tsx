@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Input from '../../../ui/Input/Input';
 import './PlanForm.scss';
+import Select from '../../../ui/Select/Select';
 
 const defaultFormFields = {
     name: '',
@@ -54,6 +55,30 @@ const PlanForm = () => {
                         name="exteriorSize"
                         placeholder=""
                         required={true}
+                    />
+
+                    <Select
+                        label="Exterior type"
+                        options={[
+                            { value: 'test', label: 'test' },
+                            { value: 'test2', label: 'test2' }
+                        ]}
+                    />
+
+                    <Select
+                        label="Facing Direction (Variable)"
+                        options={[
+                            { value: 'test', label: 'test' },
+                            { value: 'test2', label: 'test2' }
+                        ]}
+                    />
+
+                    <Select
+                        label="Select Floor Type"
+                        options={[
+                            { value: 'test', label: 'test' },
+                            { value: 'test2', label: 'test2' }
+                        ]}
                     />
                 </form>
             </div>
