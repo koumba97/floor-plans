@@ -1,12 +1,14 @@
 import './App.css';
-import SideMenu from './components/SideMenu/SideMenu';
-import { menuLinks } from './data/MenuLinkData';
+import { Route, Routes } from 'react-router-dom';
+import AppTemplate from './templates/AppTemplate';
 
 function App() {
     return (
-        <div>
-            <SideMenu links={menuLinks} />
-        </div>
+        <Routes>
+            <Route path="/" element={<AppTemplate />}>
+                <Route index element={<>App content</>} />
+            </Route>
+        </Routes>
     );
 }
 
