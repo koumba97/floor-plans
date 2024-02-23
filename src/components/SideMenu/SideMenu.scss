@@ -3,9 +3,9 @@
 .side-menu {
     background-color: $brand-color;
     color: white;
-    padding: 40px 12px;
+    padding: 40px 0;
     height: 100%;
-    width: 30px;
+    width: $side-menu-w;
     height: calc(100vh - 40px * 2);
 
     .list {

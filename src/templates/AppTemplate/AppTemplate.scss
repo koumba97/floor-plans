@@ -1,0 +1,15 @@
+@import '../../variables.scss';
+
+.app-template {
+    display: flex;
+
+    .template-content {
+        width: calc(100% - $side-menu-w );
+    }
+
+    .page {
+        min-height: calc(100% - $nav-bar-h - $footer-h - 20px * 2);
+        background-color: $grey-200;
+        padding: 20px;
+    }
+}
