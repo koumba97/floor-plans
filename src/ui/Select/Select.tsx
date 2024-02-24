@@ -12,9 +12,11 @@ const Select = ({ options, label }: Prop) => {
 
             <div className="select-container">
                 <select>
-                    {options.map((option) => {
+                    {options.map((option, index) => {
                         return (
-                            <option value={option.value}>{option.label}</option>
+                            <option value={option.value} key={index}>
+                                {option.label}
+                            </option>
                         );
                     })}
                 </select>

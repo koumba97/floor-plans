@@ -1,8 +1,14 @@
 import './ImageCropper.scss';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 
-const ImageCropper = () => {
+interface Prop {
+    src: File | null;
+    deleteImage: Function;
+    browseFile: Function;
+}
+
+const ImageCropper = ({ src, deleteImage, browseFile }: Prop) => {
     const [rotate, setRotate] = useState(0);
     const [zoom, setZoom] = useState(1.2);
     const ROTATING_STEPS = 5;
@@ -17,21 +23,36 @@ const ImageCropper = () => {
 
     const zoomImage = (event: any) => {
         const { value } = event.target;
-        setZoom(value);
+        setZoom(Number(value));
+    };
+
+    const handleDeleteImage = () => {
+        deleteImage();
     };
 
     return (
-        <div className="image-cropper">
-            <AvatarEditor
-                image="https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000"
-                width={450}
-                height={250}
-                color={[177, 177, 177, 0.6]}
-                scale={zoom}
-                rotate={rotate}
-            />
+        <div className="image-cropper" onClick={() => browseFile()}>
+            <p className="instruction">
+                Drag the Floor Plan into the save window
+            </p>
+            <div className="image-wrapper">
+                {src ? (
+                    <AvatarEditor
+                        image={src}
+                        width={450}
+                        height={250}
+                        color={[177, 177, 177, 0.6]}
+                        scale={zoom}
+                        rotate={rotate}
+                    />
+                ) : null}
+            </div>
 
             <div className="image-controls">
+                <button id="delete-image" onClick={handleDeleteImage}>
+                    <i className="las la-trash-alt"></i>
+                </button>
+
                 <div className="zoom-setting">
                     <span>-</span>
                     <input

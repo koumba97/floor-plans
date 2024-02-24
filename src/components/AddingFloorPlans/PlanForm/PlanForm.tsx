@@ -13,6 +13,8 @@ const defaultFormFields = {
 
 const PlanForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState('');
     const { name, interiorSize, exteriorSize } = formFields;
 
     const handleInputChange = (newValue: {
@@ -22,12 +24,39 @@ const PlanForm = () => {
         setFormFields({ ...formFields, [newValue.name]: newValue.value });
     };
 
+    const handleDeleteImage = () => {
+        setSelectedImage(null);
+        setImagePreview('');
+    };
+
+    const handleBrowseFile = () => {
+        document.getElementById('file-upload')!.click();
+    };
+
     return (
         <div className="plan-form">
             <h3>Adjust Floor Plans</h3>
             <div className="content">
-                <ImageCropper />
-
+                <div>
+                    <ImageCropper
+                        src={selectedImage}
+                        deleteImage={handleDeleteImage}
+                        browseFile={handleBrowseFile}
+                    />
+                    <input
+                        type="file"
+                        name="myImage"
+                        id="file-upload"
+                        onChange={(event) => {
+                            if (event.target.files) {
+                                setSelectedImage(event.target.files[0]);
+                                setImagePreview(
+                                    URL.createObjectURL(event.target.files[0])
+                                );
+                            }
+                        }}
+                    />
+                </div>
                 <form>
                     <Input
                         label="Floor name"
