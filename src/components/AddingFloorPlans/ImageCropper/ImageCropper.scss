@@ -1,2 +1,61 @@
+@import '../../../variables.scss';
+
 .image-cropper {
+    .image-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        .zoom-setting {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 200px;
+            input[type='range'] {
+                background-color: $brand-color;
+                border-radius: 8px;
+                height: 7px;
+                width: 356px;
+                -webkit-appearance: none;
+                cursor: pointer;
+
+                &::-webkit-slider-thumb {
+                    width: 16px;
+                    -webkit-appearance: none;
+                    height: 16px;
+                    background: $brand-color;
+                    border-radius: 100%;
+                }
+            }
+        }
+
+        .rotate-setting {
+            display: flex;
+            gap: 12px;
+            #rotate-left {
+                background-image: url('/icons/rotate-left.png');
+            }
+            #rotate-right {
+                background-image: url('/icons/rotate-right.png');
+            }
+            #rotate-left,
+            #rotate-right {
+                cursor: pointer;
+                height: 20px;
+                width: 20px;
+                background-size: cover;
+                background-color: transparent;
+                border: none;
+                transition:
+                    opacity 0.3s,
+                    scale 0.3s;
+
+                &:active {
+                    scale: 0.9;
+                }
+                &:hover {
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
 }
