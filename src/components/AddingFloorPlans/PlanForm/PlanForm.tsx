@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Input from '../../../ui/Input/Input';
 import './PlanForm.scss';
 import Select from '../../../ui/Select/Select';
+import ImageCropper from '../ImageCropper/ImageCropper';
 
 const defaultFormFields = {
     name: '',
@@ -25,7 +26,8 @@ const PlanForm = () => {
         <div className="plan-form">
             <h3>Adjust Floor Plans</h3>
             <div className="content">
-                <div className="image"></div>
+                <ImageCropper />
+
                 <form>
                     <Input
                         label="Floor name"
