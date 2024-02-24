@@ -24,6 +24,7 @@ const ImageCropper = ({
     const [rotate, setRotate] = useState(0);
     const [croppedImage, setCroppedImage] = useState('');
     const [zoom, setZoom] = useState(1.2);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
     const ROTATING_STEPS = 5;
     const editor = useRef<AvatarEditor>(null);
     const { currentFloorPlan } = useContext(FloorPlanContext);
@@ -40,12 +41,14 @@ const ImageCropper = ({
         if (currentFloorPlan) {
             setZoom(currentFloorPlan.image.zoom);
             setRotate(currentFloorPlan.image.rotate);
+            setPosition(currentFloorPlan.image.position);
         }
     }, [currentFloorPlan]);
 
     const resetValues = () => {
         setRotate(0);
         setZoom(1.2);
+        setPosition({ x: 0, y: 0 });
     };
 
     const rotateImage = (direction: 'left' | 'right') => {
@@ -59,6 +62,10 @@ const ImageCropper = ({
     const zoomImage = (event: any) => {
         const { value } = event.target;
         setZoom(Number(value));
+    };
+
+    const handlePositionChange = (position: { x: number; y: number }) => {
+        setPosition(position);
     };
 
     const handleDeleteImage = () => {
@@ -75,7 +82,8 @@ const ImageCropper = ({
                 original: src,
                 cropped: img,
                 rotate,
-                zoom
+                zoom,
+                position
             };
 
             imageData(imgData);
@@ -97,6 +105,8 @@ const ImageCropper = ({
                         color={[177, 177, 177, 0.6]}
                         scale={zoom}
                         rotate={rotate}
+                        position={position}
+                        onPositionChange={handlePositionChange}
                     />
                 ) : (
                     <Dropzone
