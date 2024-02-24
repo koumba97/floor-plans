@@ -8,6 +8,10 @@ function App() {
         <Routes>
             <Route path="/" element={<AppTemplate />}>
                 <Route index element={<AddingFloorPlans />} />
+                <Route
+                    path="/floor-plan/:floorPlanId"
+                    element={<AddingFloorPlans />}
+                />
             </Route>
         </Routes>
     );

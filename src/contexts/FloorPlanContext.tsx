@@ -4,6 +4,7 @@ import { uniqId } from '../utils/UniqId';
 
 export const FloorPlanContext = createContext({
     floorPlans: [] as FloorPlan[],
+    currentFloorPlan: {} as FloorPlan | null,
     addFloorPlan: (_floorPlan: FloorPlan) => {},
     getFloorPlansById: (_floorPlanId: string): FloorPlan | null => {
         return null;
@@ -16,22 +17,35 @@ interface FloorPlanProviderInterface {
 
 export const FloorPlanProvider = ({ children }: FloorPlanProviderInterface) => {
     const [floorPlans, setFloorPlans] = useState<FloorPlan[]>([]);
+    const [currentFloorPlan, setCurrentFloorPlan] = useState<FloorPlan | null>(
+        null
+    );
 
     const addFloorPlan = (floorPlan: FloorPlan) => {
-        console.log('click');
-
         setFloorPlans((prevFloorPlans) => [...prevFloorPlans, floorPlan]);
-        console.log(floorPlans);
+        setCurrentFloorPlan(floorPlan);
     };
 
     const getFloorPlansById = (floorPlansId: string): FloorPlan | null => {
         const result = floorPlans.find(
-            (floorPlans) => floorPlans.name === floorPlansId
+            (floorPlans) => floorPlans.id === floorPlansId
         );
-        return result ? result : null;
+
+        if (result) {
+            setCurrentFloorPlan(result);
+            return result;
+        }
+
+        setCurrentFloorPlan(null);
+        return null;
     };
 
-    const value = { floorPlans, addFloorPlan, getFloorPlansById };
+    const value = {
+        floorPlans,
+        currentFloorPlan,
+        addFloorPlan,
+        getFloorPlansById
+    };
     return (
         <FloorPlanContext.Provider value={value}>
             {children}

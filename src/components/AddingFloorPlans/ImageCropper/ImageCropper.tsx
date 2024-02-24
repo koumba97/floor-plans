@@ -1,8 +1,10 @@
 import './ImageCropper.scss';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import Dropzone from 'react-dropzone';
 import { ImageFloorPlan } from '../../../types/ImageFloorPlan';
+import { useParams } from 'react-router';
+import { FloorPlanContext } from '../../../contexts/FloorPlanContext';
 
 interface Prop {
     src: File | null;
@@ -24,6 +26,7 @@ const ImageCropper = ({
     const [zoom, setZoom] = useState(1.2);
     const ROTATING_STEPS = 5;
     const editor = useRef<AvatarEditor>(null);
+    const { currentFloorPlan } = useContext(FloorPlanContext);
 
     useEffect(() => {
         resetValues();
@@ -32,6 +35,13 @@ const ImageCropper = ({
     useEffect(() => {
         onClickSave();
     }, [submitted]);
+
+    useEffect(() => {
+        if (currentFloorPlan) {
+            setZoom(currentFloorPlan.image.zoom);
+            setRotate(currentFloorPlan.image.rotate);
+        }
+    }, [currentFloorPlan]);
 
     const resetValues = () => {
         setRotate(0);

@@ -1,11 +1,19 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import PlanForm from '../components/AddingFloorPlans/PlanForm/PlanForm';
 import PlanList from '../components/AddingFloorPlans/PlanList/PlanList';
 import './AddingFloorPlans.scss';
 import { FloorPlanContext } from '../contexts/FloorPlanContext';
+import { useParams } from 'react-router';
 
 const AddingFloorPlans = () => {
-    const { floorPlans } = useContext(FloorPlanContext);
+    const { floorPlans, getFloorPlansById } = useContext(FloorPlanContext);
+    const { floorPlanId } = useParams<string>();
+
+    useEffect(() => {
+        if (floorPlanId) {
+            getFloorPlansById(floorPlanId);
+        }
+    }, [floorPlanId]);
 
     return (
         <div className="adding-floor-plans">

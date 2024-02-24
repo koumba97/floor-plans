@@ -6,6 +6,7 @@ import ImageCropper from '../ImageCropper/ImageCropper';
 import { ImageFloorPlan } from '../../../types/ImageFloorPlan';
 import { FloorPlanContext } from '../../../contexts/FloorPlanContext';
 import { uniqId } from '../../../utils/UniqId';
+import { useNavigate, useParams } from 'react-router';
 
 const defaultFormFields = {
     name: 'a',
@@ -14,6 +15,7 @@ const defaultFormFields = {
 };
 
 const PlanForm = () => {
+    const navigate = useNavigate();
     const [formFields, setFormFields] = useState(defaultFormFields);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [imageData, setImageData] = useState<ImageFloorPlan | undefined>(
@@ -22,15 +24,26 @@ const PlanForm = () => {
     const [imagePreview, setImagePreview] = useState('');
     let [submitImage, setSubmitImage] = useState(0);
     const { name, interiorSize, exteriorSize } = formFields;
-    const imageCropperRef = useRef<any>(null);
-
-    const { addFloorPlan } = useContext(FloorPlanContext);
+    const { floorPlanId } = useParams<string>();
+    const { addFloorPlan, currentFloorPlan } = useContext(FloorPlanContext);
 
     useEffect(() => {
         if (imageData) {
             handleValidation();
         }
     }, [imageData]);
+
+    useEffect(() => {
+        if (currentFloorPlan) {
+            setFormFields({
+                name: currentFloorPlan.name,
+                interiorSize: currentFloorPlan.interiorSize,
+                exteriorSize: currentFloorPlan.exteriorSize
+            });
+
+            setSelectedImage(currentFloorPlan.image.original);
+        }
+    }, [currentFloorPlan]);
 
     const handleValidation = () => {
         let errors = [];
@@ -71,11 +84,14 @@ const PlanForm = () => {
 
     const addingFloorPlans = () => {
         if (imageData) {
+            const id = uniqId();
             addFloorPlan({
-                id: uniqId(),
-                image: imageData,
-                ...formFields
+                ...formFields,
+                id,
+                image: imageData
             });
+
+            navigate(`/floor-plan/${id}`);
         }
     };
 
@@ -83,10 +99,11 @@ const PlanForm = () => {
         setSubmitImage(submitImage + 1);
     };
 
+    const updatePlanForm = () => {};
+
     return (
         <div className="plan-form">
             <h3>Adjust Floor Plans</h3>
-            {submitImage}
             <div className="content">
                 <ImageCropper
                     src={selectedImage}
@@ -152,7 +169,11 @@ const PlanForm = () => {
                     />
                 </form>
             </div>
-            <button onClick={submitPlanForm}>Save</button>
+            {floorPlanId ? (
+                <button onClick={updatePlanForm}>Update</button>
+            ) : (
+                <button onClick={submitPlanForm}>Save</button>
+            )}
         </div>
     );
 };
