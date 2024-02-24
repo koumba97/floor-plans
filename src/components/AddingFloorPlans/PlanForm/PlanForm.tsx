@@ -1,28 +1,52 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Input from '../../../ui/Input/Input';
 import './PlanForm.scss';
 import Select from '../../../ui/Select/Select';
 import ImageCropper from '../ImageCropper/ImageCropper';
+import { ImageFloorPlan } from '../../../types/ImageFloorPlan';
+import { FloorPlanContext } from '../../../contexts/FloorPlanContext';
+import { uniqId } from '../../../utils/UniqId';
 
 const defaultFormFields = {
-    name: '',
-    interiorSize: '',
-    exteriorSize: '',
-    typeSize: ''
+    name: 'a',
+    interiorSize: 'a',
+    exteriorSize: 'a'
 };
 
 const PlanForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [imageData, setImageData] = useState<Object | undefined>(undefined);
+    const [imageData, setImageData] = useState<ImageFloorPlan | undefined>(
+        undefined
+    );
     const [imagePreview, setImagePreview] = useState('');
     let [submitImage, setSubmitImage] = useState(0);
     const { name, interiorSize, exteriorSize } = formFields;
     const imageCropperRef = useRef<any>(null);
 
+    const { addFloorPlan } = useContext(FloorPlanContext);
+
     useEffect(() => {
-        console.log(imageData);
+        if (imageData) {
+            handleValidation();
+        }
     }, [imageData]);
+
+    const handleValidation = () => {
+        let errors = [];
+        for (const [key, value] of Object.entries(formFields)) {
+            if (!value) {
+                errors.push(key);
+            }
+        }
+        if (errors.length === 0) {
+            addingFloorPlans();
+            console.log('valid');
+        } else {
+            // display errors
+            console.log('not valid', errors);
+        }
+    };
 
     const handleInputChange = (newValue: {
         name: string;
@@ -36,17 +60,27 @@ const PlanForm = () => {
         setImagePreview('');
     };
 
-    const handleBrowseFile = () => {
-        //document.getElementById('file-upload')!.click();
-    };
-
     const handleSelectedImage = (file: File) => {
         setSelectedImage(file);
         setImagePreview(URL.createObjectURL(file));
     };
 
-    const handleImageData = (data: any) => {
+    const storeImageData = (data: any) => {
         setImageData(data);
+    };
+
+    const addingFloorPlans = () => {
+        if (imageData) {
+            addFloorPlan({
+                id: uniqId(),
+                image: imageData,
+                ...formFields
+            });
+        }
+    };
+
+    const submitPlanForm = () => {
+        setSubmitImage(submitImage + 1);
     };
 
     return (
@@ -58,9 +92,8 @@ const PlanForm = () => {
                     src={selectedImage}
                     submitted={submitImage}
                     deleteImage={handleDeleteImage}
-                    browseFile={handleBrowseFile}
                     selectImage={handleSelectedImage}
-                    imageData={handleImageData}
+                    imageData={storeImageData}
                 />
 
                 <form>
@@ -119,9 +152,7 @@ const PlanForm = () => {
                     />
                 </form>
             </div>
-            <button onClick={() => setSubmitImage(submitImage + 1)}>
-                Save
-            </button>
+            <button onClick={submitPlanForm}>Save</button>
         </div>
     );
 };

@@ -2,12 +2,12 @@ import './ImageCropper.scss';
 import { useEffect, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import Dropzone from 'react-dropzone';
+import { ImageFloorPlan } from '../../../types/ImageFloorPlan';
 
 interface Prop {
     src: File | null;
     submitted: number;
     deleteImage: Function;
-    browseFile: Function;
     selectImage: Function;
     imageData: Function;
 }
@@ -15,7 +15,6 @@ interface Prop {
 const ImageCropper = ({
     src,
     deleteImage,
-    browseFile,
     selectImage,
     imageData,
     submitted
@@ -32,7 +31,6 @@ const ImageCropper = ({
 
     useEffect(() => {
         onClickSave();
-        console.log('o');
     }, [submitted]);
 
     const resetValues = () => {
@@ -63,7 +61,7 @@ const ImageCropper = ({
         if (img) {
             setCroppedImage(img);
 
-            const imgData = {
+            const imgData: ImageFloorPlan = {
                 original: src,
                 cropped: img,
                 rotate,

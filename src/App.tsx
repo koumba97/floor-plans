@@ -7,7 +7,7 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<AppTemplate />}>
-                <Route index element={<AddingFloorPlans/>} />
+                <Route index element={<AddingFloorPlans />} />
             </Route>
         </Routes>
     );

@@ -1,10 +1,11 @@
+import { FloorPlan } from '../../../types/FloorPlan';
 import './PlanList.scss';
 
 interface Prop {
-    list: [];
+    plans: FloorPlan[];
 }
 
-const PlanList = () => {
+const PlanList = ({ plans }: Prop) => {
     return (
         <div className="plan-list">
             <div className="item active">
@@ -12,6 +13,23 @@ const PlanList = () => {
                     <i className="las la-plus"></i>
                 </div>
             </div>
+
+            <>
+                {plans.map((plan, index) => {
+                    return (
+                        <div className="item" key={`item-list-${index}`}>
+                            <div
+                                className="new-plan"
+                                style={{
+                                    backgroundImage: `url(${plan.image.cropped})`
+                                }}
+                            >
+                                {index}
+                            </div>
+                        </div>
+                    );
+                })}
+            </>
         </div>
     );
 };
