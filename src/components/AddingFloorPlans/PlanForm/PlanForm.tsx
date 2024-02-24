@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Input from '../../../ui/Input/Input';
 import './PlanForm.scss';
 import Select from '../../../ui/Select/Select';
@@ -14,8 +14,15 @@ const defaultFormFields = {
 const PlanForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [imageData, setImageData] = useState<Object | undefined>(undefined);
     const [imagePreview, setImagePreview] = useState('');
+    let [submitImage, setSubmitImage] = useState(0);
     const { name, interiorSize, exteriorSize } = formFields;
+    const imageCropperRef = useRef<any>(null);
+
+    useEffect(() => {
+        console.log(imageData);
+    }, [imageData]);
 
     const handleInputChange = (newValue: {
         name: string;
@@ -30,33 +37,32 @@ const PlanForm = () => {
     };
 
     const handleBrowseFile = () => {
-        document.getElementById('file-upload')!.click();
+        //document.getElementById('file-upload')!.click();
+    };
+
+    const handleSelectedImage = (file: File) => {
+        setSelectedImage(file);
+        setImagePreview(URL.createObjectURL(file));
+    };
+
+    const handleImageData = (data: any) => {
+        setImageData(data);
     };
 
     return (
         <div className="plan-form">
             <h3>Adjust Floor Plans</h3>
+            {submitImage}
             <div className="content">
-                <div>
-                    <ImageCropper
-                        src={selectedImage}
-                        deleteImage={handleDeleteImage}
-                        browseFile={handleBrowseFile}
-                    />
-                    <input
-                        type="file"
-                        name="myImage"
-                        id="file-upload"
-                        onChange={(event) => {
-                            if (event.target.files) {
-                                setSelectedImage(event.target.files[0]);
-                                setImagePreview(
-                                    URL.createObjectURL(event.target.files[0])
-                                );
-                            }
-                        }}
-                    />
-                </div>
+                <ImageCropper
+                    src={selectedImage}
+                    submitted={submitImage}
+                    deleteImage={handleDeleteImage}
+                    browseFile={handleBrowseFile}
+                    selectImage={handleSelectedImage}
+                    imageData={handleImageData}
+                />
+
                 <form>
                     <Input
                         label="Floor name"
@@ -113,6 +119,9 @@ const PlanForm = () => {
                     />
                 </form>
             </div>
+            <button onClick={() => setSubmitImage(submitImage + 1)}>
+                Save
+            </button>
         </div>
     );
 };

@@ -2,25 +2,38 @@
 
 .image-cropper {
     .instruction {
-        margin: 0 0 0 auto;
+        margin: 0 0 4px auto;
         width: max-content;
         font-size: 8px;
     }
+
     .image-wrapper {
         width: 500px;
         height: 300px;
         background-color: rgb(177, 177, 177, 0.6);
+    }
+
+    .image-blank {
+        height: calc(300px - 2px * 2);
+        border: dashed 2px $grey-200;
+        cursor: pointer;
+        background-color: white;
     }
     .image-controls {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: 12px;
+        &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
         .zoom-setting {
             display: flex;
             align-items: center;
             gap: 12px;
             max-width: 200px;
+
             input[type='range'] {
                 background-color: $brand-color;
                 border-radius: 8px;

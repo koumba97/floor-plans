@@ -1,17 +1,44 @@
 import './ImageCropper.scss';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
+import Dropzone from 'react-dropzone';
 
 interface Prop {
     src: File | null;
+    submitted: number;
     deleteImage: Function;
     browseFile: Function;
+    selectImage: Function;
+    imageData: Function;
 }
 
-const ImageCropper = ({ src, deleteImage, browseFile }: Prop) => {
+const ImageCropper = ({
+    src,
+    deleteImage,
+    browseFile,
+    selectImage,
+    imageData,
+    submitted
+}: Prop) => {
     const [rotate, setRotate] = useState(0);
+    const [croppedImage, setCroppedImage] = useState('');
     const [zoom, setZoom] = useState(1.2);
     const ROTATING_STEPS = 5;
+    const editor = useRef<AvatarEditor>(null);
+
+    useEffect(() => {
+        resetValues();
+    }, [src]);
+
+    useEffect(() => {
+        onClickSave();
+        console.log('o');
+    }, [submitted]);
+
+    const resetValues = () => {
+        setRotate(0);
+        setZoom(1.2);
+    };
 
     const rotateImage = (direction: 'left' | 'right') => {
         if (direction === 'left') {
@@ -30,14 +57,32 @@ const ImageCropper = ({ src, deleteImage, browseFile }: Prop) => {
         deleteImage();
     };
 
+    const onClickSave = () => {
+        const img = editor.current?.getImageScaledToCanvas().toDataURL();
+
+        if (img) {
+            setCroppedImage(img);
+
+            const imgData = {
+                original: src,
+                cropped: img,
+                rotate,
+                zoom
+            };
+
+            imageData(imgData);
+        }
+    };
+
     return (
-        <div className="image-cropper" onClick={() => browseFile()}>
+        <div className="image-cropper">
             <p className="instruction">
                 Drag the Floor Plan into the save window
             </p>
             <div className="image-wrapper">
                 {src ? (
                     <AvatarEditor
+                        ref={editor}
                         image={src}
                         width={450}
                         height={250}
@@ -45,17 +90,35 @@ const ImageCropper = ({ src, deleteImage, browseFile }: Prop) => {
                         scale={zoom}
                         rotate={rotate}
                     />
-                ) : null}
+                ) : (
+                    <Dropzone
+                        onDrop={(file) => {
+                            selectImage(file[0]);
+                        }}
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                            <div {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                <div className="image-blank"></div>
+                            </div>
+                        )}
+                    </Dropzone>
+                )}
             </div>
 
-            <div className="image-controls">
-                <button id="delete-image" onClick={handleDeleteImage}>
+            <div className={`image-controls ${src ? '' : 'disabled'}`}>
+                <button
+                    id="delete-image"
+                    onClick={handleDeleteImage}
+                    disabled={!src}
+                >
                     <i className="las la-trash-alt"></i>
                 </button>
 
                 <div className="zoom-setting">
                     <span>-</span>
                     <input
+                        disabled={!src}
                         type="range"
                         step={0.1}
                         min="1"
@@ -67,10 +130,12 @@ const ImageCropper = ({ src, deleteImage, browseFile }: Prop) => {
                 </div>
                 <div className="rotate-setting">
                     <button
+                        disabled={!src}
                         onMouseDown={() => rotateImage('left')}
                         id="rotate-left"
                     ></button>
                     <button
+                        disabled={!src}
                         onMouseDown={() => rotateImage('right')}
                         id="rotate-right"
                     ></button>
