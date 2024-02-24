@@ -19,4 +19,11 @@
     .test {
         border: solid;
     }
+    .buttons-container {
+        margin-left: auto;
+        margin-top: 20px;
+        width: max-content;
+        display: flex;
+        gap: 20px;
+    }
 }

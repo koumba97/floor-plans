@@ -15,6 +15,7 @@ import {
     FacingDirection,
     ExteriorType
 } from '../../../types/FloorPlan';
+import Button from '../../../ui/Button/Button';
 
 const defaultFormFields = {
     name: 'a',
@@ -43,11 +44,18 @@ const PlanForm = () => {
         facingDirection
     } = formFields;
     const { floorPlanId } = useParams<string>();
-    const { addFloorPlan, currentFloorPlan } = useContext(FloorPlanContext);
+    const { addFloorPlan, updateFloorPlan, currentFloorPlan } =
+        useContext(FloorPlanContext);
 
     useEffect(() => {
         if (imageData) {
-            handleValidation();
+            if (handleValidation()) {
+                if (floorPlanId) {
+                    handleUpdateFormPlan();
+                } else {
+                    addingFloorPlans();
+                }
+            }
         }
     }, [imageData]);
 
@@ -65,14 +73,11 @@ const PlanForm = () => {
             setSelectedImage(currentFloorPlan.image.original);
         } else {
             setFormFields(defaultFormFields);
-
-            console.log(formFields);
-
             setSelectedImage(null);
         }
     }, [currentFloorPlan, floorPlanId]);
 
-    const handleValidation = () => {
+    const handleValidation = (): boolean => {
         let errors = [];
         for (const [key, value] of Object.entries(formFields)) {
             if (!value) {
@@ -80,11 +85,12 @@ const PlanForm = () => {
             }
         }
         if (errors.length === 0) {
-            addingFloorPlans();
             console.log('valid');
+            return true;
         } else {
             // display errors
             console.log('not valid', errors, formFields);
+            return false;
         }
     };
 
@@ -126,7 +132,17 @@ const PlanForm = () => {
         setSubmitImage(submitImage + 1);
     };
 
-    const updatePlanForm = () => {};
+    const handleUpdateFormPlan = () => {
+        if (handleValidation() && floorPlanId && imageData) {
+            updateFloorPlan(floorPlanId, {
+                ...formFields,
+                id: floorPlanId,
+                image: imageData
+            });
+        }
+    };
+
+    const handleDeleteFormPlan = () => {};
 
     return (
         <div className="plan-form">
@@ -224,11 +240,18 @@ const PlanForm = () => {
                     />
                 </form>
             </div>
-            {floorPlanId ? (
-                <button onClick={updatePlanForm}>Update</button>
-            ) : (
-                <button onClick={submitPlanForm}>Save</button>
-            )}
+            <div className="buttons-container">
+                {floorPlanId ? (
+                    <>
+                        <Button style="outlined" onClick={handleDeleteFormPlan}>
+                            Delete
+                        </Button>
+                        <Button onClick={submitPlanForm}>Update</Button>
+                    </>
+                ) : (
+                    <Button onClick={submitPlanForm}>Save</Button>
+                )}
+            </div>
         </div>
     );
 };

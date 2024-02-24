@@ -6,6 +6,7 @@ export const FloorPlanContext = createContext({
     floorPlans: [] as FloorPlan[],
     currentFloorPlan: {} as FloorPlan | null,
     addFloorPlan: (_floorPlan: FloorPlan) => {},
+    updateFloorPlan: (_floorPlanId: string, _floorPlan: FloorPlan) => {},
     getFloorPlansById: (_floorPlanId: string): FloorPlan | null => {
         return null;
     }
@@ -26,9 +27,19 @@ export const FloorPlanProvider = ({ children }: FloorPlanProviderInterface) => {
         setCurrentFloorPlan(floorPlan);
     };
 
-    const getFloorPlansById = (floorPlansId: string): FloorPlan | null => {
+    const updateFloorPlan = (floorPlanId: string, floorPlan: FloorPlan) => {
+        const index = floorPlans.findIndex(
+            (floorPlans) => floorPlans.id === floorPlanId
+        );
+        const newFloorPlans = [...floorPlans];
+        newFloorPlans[index] = floorPlan;
+        setFloorPlans((prevFloorPlans) => [...newFloorPlans]);
+        setCurrentFloorPlan(floorPlan);
+    };
+
+    const getFloorPlansById = (floorPlanId: string): FloorPlan | null => {
         const result = floorPlans.find(
-            (floorPlans) => floorPlans.id === floorPlansId
+            (floorPlans) => floorPlans.id === floorPlanId
         );
 
         if (result) {
@@ -44,6 +55,7 @@ export const FloorPlanProvider = ({ children }: FloorPlanProviderInterface) => {
         floorPlans,
         currentFloorPlan,
         addFloorPlan,
+        updateFloorPlan,
         getFloorPlansById
     };
     return (
