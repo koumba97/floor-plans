@@ -1,10 +1,8 @@
 import './Input.scss';
-import { useState } from 'react';
 
 interface IProps {
     type: 'text' | 'number' | 'password' | 'email';
     label?: string;
-    defaultValue?: string | number;
     value: string | number | undefined;
     placeholder: string;
     required: boolean;
@@ -14,18 +12,14 @@ interface IProps {
 const Input = ({
     type,
     label,
-    defaultValue,
     value,
     placeholder,
     required,
     name,
     onChange
 }: IProps) => {
-    const [_inputValue, setInputValue] = useState(defaultValue);
-
     const handleChange = (event: any) => {
         const { value } = event.target;
-        setInputValue(value);
 
         if (onChange) {
             onChange({ name: name, value: value });

@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { FloorPlan } from '../types/FloorPlan';
+import FloorPlan from '../types/FloorPlan';
 import { uniqId } from '../utils/UniqId';
 
 export const FloorPlanContext = createContext({

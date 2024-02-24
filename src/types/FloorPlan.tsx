@@ -1,15 +1,42 @@
 import { ImageFloorPlan } from './ImageFloorPlan';
 
-export interface FloorPlan {
+export default interface FloorPlan {
     id: string;
     image: ImageFloorPlan;
     name: string;
     interiorSize: string;
     exteriorSize: string;
-    // exteriorType: ExteriorType;
-    // floorType: FloorType;
+    exteriorType: ExteriorType;
+    floorType: FloorType;
+    facingDirection: FacingDirection;
 }
 
-type FloorType = 'studio' | '1bed1bath' | '2bed1bath' | '3bed2bath';
+export enum FloorEnum {
+    studio = 'Studio',
+    oneBedOneBath = 'One Bedroom One Bathroom',
+    twoBedOneBath = 'Two Bedrooms One Bathroom',
+    threeBedTwoBed = 'Three Bedrooms  Two Bathrooms'
+}
+export type FloorType =
+    | FloorEnum.studio
+    | FloorEnum.oneBedOneBath
+    | FloorEnum.twoBedOneBath
+    | FloorEnum.threeBedTwoBed;
 
-type ExteriorType = 'apartment' | 'house';
+export enum DirectionEnum {
+    north = 'North',
+    south = 'South',
+    east = 'East',
+    west = 'West'
+}
+export type FacingDirection =
+    | DirectionEnum.north
+    | DirectionEnum.south
+    | DirectionEnum.east
+    | DirectionEnum.west;
+
+export enum ExteriorEnum {
+    apartment = 'Apartment',
+    house = 'House'
+}
+export type ExteriorType = ExteriorEnum.apartment | ExteriorEnum.house;

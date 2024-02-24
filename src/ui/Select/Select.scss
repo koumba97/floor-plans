@@ -1,1 +1,7 @@
 @import '../Input/Input.scss';
+
+.select {
+    option[value=''][disabled] {
+        // display: none;
+    }
+}

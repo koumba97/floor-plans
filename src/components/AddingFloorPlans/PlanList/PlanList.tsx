@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FloorPlan } from '../../../types/FloorPlan';
+import FloorPlan from '../../../types/FloorPlan';
 import './PlanList.scss';
 import { useContext } from 'react';
 import { FloorPlanContext } from '../../../contexts/FloorPlanContext';

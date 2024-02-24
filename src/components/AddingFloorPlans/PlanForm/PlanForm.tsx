@@ -7,11 +7,22 @@ import { ImageFloorPlan } from '../../../types/ImageFloorPlan';
 import { FloorPlanContext } from '../../../contexts/FloorPlanContext';
 import { uniqId } from '../../../utils/UniqId';
 import { useNavigate, useParams } from 'react-router';
+import {
+    FloorEnum,
+    DirectionEnum,
+    ExteriorEnum,
+    FloorType,
+    FacingDirection,
+    ExteriorType
+} from '../../../types/FloorPlan';
 
 const defaultFormFields = {
-    name: '',
-    interiorSize: '',
-    exteriorSize: ''
+    name: 'a',
+    interiorSize: 'a',
+    exteriorSize: 'a',
+    exteriorType: '' as ExteriorType,
+    floorType: '' as FloorType,
+    facingDirection: '' as FacingDirection
 };
 
 const PlanForm = () => {
@@ -23,7 +34,14 @@ const PlanForm = () => {
     );
     const [imagePreview, setImagePreview] = useState('');
     let [submitImage, setSubmitImage] = useState(0);
-    const { name, interiorSize, exteriorSize } = formFields;
+    const {
+        name,
+        interiorSize,
+        exteriorSize,
+        exteriorType,
+        floorType,
+        facingDirection
+    } = formFields;
     const { floorPlanId } = useParams<string>();
     const { addFloorPlan, currentFloorPlan } = useContext(FloorPlanContext);
 
@@ -38,12 +56,18 @@ const PlanForm = () => {
             setFormFields({
                 name: currentFloorPlan.name,
                 interiorSize: currentFloorPlan.interiorSize,
-                exteriorSize: currentFloorPlan.exteriorSize
+                exteriorSize: currentFloorPlan.exteriorSize,
+                exteriorType: currentFloorPlan.exteriorType,
+                floorType: currentFloorPlan.floorType,
+                facingDirection: currentFloorPlan.facingDirection
             });
 
             setSelectedImage(currentFloorPlan.image.original);
         } else {
             setFormFields(defaultFormFields);
+
+            console.log(formFields);
+
             setSelectedImage(null);
         }
     }, [currentFloorPlan, floorPlanId]);
@@ -60,7 +84,7 @@ const PlanForm = () => {
             console.log('valid');
         } else {
             // display errors
-            console.log('not valid', errors);
+            console.log('not valid', errors, formFields);
         }
     };
 
@@ -149,25 +173,53 @@ const PlanForm = () => {
 
                     <Select
                         label="Exterior type"
+                        value={exteriorType}
+                        name="exteriorType"
+                        placeholder="Select"
+                        onChange={handleInputChange}
                         options={[
-                            { value: 'test', label: 'test' },
-                            { value: 'test2', label: 'test2' }
+                            {
+                                value: 'apartment',
+                                label: ExteriorEnum.apartment
+                            },
+                            { value: 'house', label: ExteriorEnum.house }
                         ]}
                     />
 
                     <Select
                         label="Facing Direction (Variable)"
+                        value={facingDirection}
+                        placeholder="Select"
+                        name="facingDirection"
+                        onChange={handleInputChange}
                         options={[
-                            { value: 'test', label: 'test' },
-                            { value: 'test2', label: 'test2' }
+                            { value: 'north', label: DirectionEnum.north },
+                            { value: 'east', label: DirectionEnum.east },
+                            { value: 'south', label: DirectionEnum.south },
+                            { value: 'west', label: DirectionEnum.west }
                         ]}
                     />
 
                     <Select
                         label="Select Floor Type"
+                        value={floorType}
+                        placeholder="Select"
+                        name="floorType"
+                        onChange={handleInputChange}
                         options={[
-                            { value: 'test', label: 'test' },
-                            { value: 'test2', label: 'test2' }
+                            { value: 'studio', label: FloorEnum.studio },
+                            {
+                                value: 'oneBedOneBath',
+                                label: FloorEnum.oneBedOneBath
+                            },
+                            {
+                                value: 'twoBedOneBath',
+                                label: FloorEnum.twoBedOneBath
+                            },
+                            {
+                                value: 'threeBedTwoBed',
+                                label: FloorEnum.threeBedTwoBed
+                            }
                         ]}
                     />
                 </form>
