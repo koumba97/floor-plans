@@ -9,9 +9,9 @@ import { uniqId } from '../../../utils/UniqId';
 import { useNavigate, useParams } from 'react-router';
 
 const defaultFormFields = {
-    name: 'a',
-    interiorSize: 'a',
-    exteriorSize: 'a'
+    name: '',
+    interiorSize: '',
+    exteriorSize: ''
 };
 
 const PlanForm = () => {
@@ -34,7 +34,7 @@ const PlanForm = () => {
     }, [imageData]);
 
     useEffect(() => {
-        if (currentFloorPlan) {
+        if (floorPlanId && currentFloorPlan) {
             setFormFields({
                 name: currentFloorPlan.name,
                 interiorSize: currentFloorPlan.interiorSize,
@@ -42,8 +42,11 @@ const PlanForm = () => {
             });
 
             setSelectedImage(currentFloorPlan.image.original);
+        } else {
+            setFormFields(defaultFormFields);
+            setSelectedImage(null);
         }
-    }, [currentFloorPlan]);
+    }, [currentFloorPlan, floorPlanId]);
 
     const handleValidation = () => {
         let errors = [];

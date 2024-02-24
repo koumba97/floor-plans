@@ -5,6 +5,11 @@
     width: 236px;
     height: 450px;
     padding: 20px 0;
+    overflow: scroll;
+
+    a {
+        text-decoration: none;
+    }
 
     .item {
         cursor: pointer;
@@ -14,10 +19,12 @@
             border-color: $brand-color;
         }
 
-        .new-plan {
+        .new-plan,
+        .plan {
             color: $grey-200;
             height: 120px;
-            border: dashed 2px;
+            background-position: center;
+            background-size: cover;
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -37,6 +44,13 @@
             &:active {
                 scale: 0.95;
             }
+        }
+
+        .new-plan {
+            border: dashed 2px;
+        }
+        .plan {
+            border: solid 2px;
         }
     }
 }

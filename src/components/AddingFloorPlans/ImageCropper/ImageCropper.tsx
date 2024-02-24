@@ -28,9 +28,12 @@ const ImageCropper = ({
     const ROTATING_STEPS = 5;
     const editor = useRef<AvatarEditor>(null);
     const { currentFloorPlan } = useContext(FloorPlanContext);
+    const { floorPlanId } = useParams<string>();
 
     useEffect(() => {
-        resetValues();
+        if (!floorPlanId) {
+            resetValues();
+        }
     }, [src]);
 
     useEffect(() => {
@@ -42,8 +45,9 @@ const ImageCropper = ({
             setZoom(currentFloorPlan.image.zoom);
             setRotate(currentFloorPlan.image.rotate);
             setPosition(currentFloorPlan.image.position);
+            console.log(currentFloorPlan);
         }
-    }, [currentFloorPlan]);
+    }, [currentFloorPlan, floorPlanId]);
 
     const resetValues = () => {
         setRotate(0);

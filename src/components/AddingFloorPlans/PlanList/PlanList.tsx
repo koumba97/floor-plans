@@ -32,13 +32,11 @@ const PlanList = ({ plans }: Prop) => {
                                 className={`item ${currentFloorPlan && currentFloorPlan.id === plan.id ? 'active' : ''}`}
                             >
                                 <div
-                                    className="new-plan"
+                                    className="plan"
                                     style={{
                                         backgroundImage: `url(${plan.image.cropped})`
                                     }}
-                                >
-                                    {index}
-                                </div>
+                                ></div>
                             </div>
                         </Link>
                     );
