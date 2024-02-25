@@ -7,9 +7,8 @@ export const FloorPlanContext = createContext({
     currentFloorPlan: {} as FloorPlan | null,
     addFloorPlan: (_floorPlan: FloorPlan) => {},
     updateFloorPlan: (_floorPlanId: string, _floorPlan: FloorPlan) => {},
-    getFloorPlansById: (_floorPlanId: string): FloorPlan | null => {
-        return null;
-    }
+    getFloorPlansById: (_floorPlanId: string) => {},
+    deleteFloorPlan: (_floorPlanId: string) => {}
 });
 
 interface FloorPlanProviderInterface {
@@ -37,6 +36,16 @@ export const FloorPlanProvider = ({ children }: FloorPlanProviderInterface) => {
         setCurrentFloorPlan(floorPlan);
     };
 
+    const deleteFloorPlan = (floorPlanId: string): void => {
+        const index = floorPlans.findIndex(
+            (floorPlans) => floorPlans.id === floorPlanId
+        );
+        const newFloorPlans = [...floorPlans];
+        newFloorPlans.splice(index, 1);
+        setFloorPlans((prevFloorPlans) => [...newFloorPlans]);
+        setCurrentFloorPlan(null);
+    };
+
     const getFloorPlansById = (floorPlanId: string): FloorPlan | null => {
         const result = floorPlans.find(
             (floorPlans) => floorPlans.id === floorPlanId
@@ -56,7 +65,8 @@ export const FloorPlanProvider = ({ children }: FloorPlanProviderInterface) => {
         currentFloorPlan,
         addFloorPlan,
         updateFloorPlan,
-        getFloorPlansById
+        getFloorPlansById,
+        deleteFloorPlan
     };
     return (
         <FloorPlanContext.Provider value={value}>

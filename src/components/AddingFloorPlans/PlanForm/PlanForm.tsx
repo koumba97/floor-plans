@@ -44,7 +44,7 @@ const PlanForm = () => {
         facingDirection
     } = formFields;
     const { floorPlanId } = useParams<string>();
-    const { addFloorPlan, updateFloorPlan, currentFloorPlan } =
+    const { addFloorPlan, updateFloorPlan, deleteFloorPlan, currentFloorPlan } =
         useContext(FloorPlanContext);
 
     useEffect(() => {
@@ -142,7 +142,12 @@ const PlanForm = () => {
         }
     };
 
-    const handleDeleteFormPlan = () => {};
+    const handleDeleteFormPlan = () => {
+        if (floorPlanId) {
+            deleteFloorPlan(floorPlanId);
+            navigate('/');
+        }
+    };
 
     return (
         <div className="plan-form">
