@@ -75,13 +75,17 @@ const ImageCropper = ({
         if (width < SM_BREAKPOINT) {
             console.log('sm');
             setCanvasWidth(width - SM_CANVA_RATIO);
-        } else if (width < MD_BREAKPOINT) {
+        } else if (SM_BREAKPOINT < width && width < MD_BREAKPOINT) {
             console.log('md');
             setCanvasWidth(width - MD_CANVA_RATIO);
-        } else if (width < 800) {
+        } else if (MD_BREAKPOINT < width && width < 800) {
             console.log('lg');
             setCanvasWidth(width - LG_CANVA_RATIO);
-        } else {
+        } else if (800 < width && width < 1030) {
+            console.log(800, 1030);
+            setCanvasWidth(width - 600);
+        } else if (1030 < width) {
+            console.log('+' + 1030);
             setCanvasWidth(450);
         }
     };
@@ -136,7 +140,7 @@ const ImageCropper = ({
     return (
         <div className="image-cropper">
             <p className="instruction">
-                Drag the Floor Plan into the save window {canvasWidth}
+                Drag the Floor Plan into the save window
             </p>
             <div className="image-wrapper">
                 {src ? (
@@ -161,7 +165,10 @@ const ImageCropper = ({
                         {({ getRootProps, getInputProps }) => (
                             <div {...getRootProps()}>
                                 <input {...getInputProps()} />
-                                <div className="image-blank">
+                                <div
+                                    className="image-blank"
+                                    style={{ width: canvasWidth }}
+                                >
                                     <p>Drag the image or Browse to open</p>
                                 </div>
                             </div>

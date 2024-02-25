@@ -7,21 +7,21 @@
         font-size: 8px;
     }
 
-    .testtt {
-        border: solid 3px;
-    }
-
     .image-wrapper {
-        width: 500px;
-        height: 300px;
         background-color: rgb(177, 177, 177, 0.6);
     }
 
     .image-blank {
         height: calc(300px - 2px * 2);
         border: dashed 2px $grey-200;
+        padding: 0 35px;
         cursor: pointer;
         background-color: white;
+        display: flex;
+        align-items: center;
+        p {
+            margin: auto;
+        }
     }
     .image-controls {
         display: flex;
@@ -111,8 +111,6 @@
             width: auto !important;
         }
         .testtt {
-            border: solid 3px;
-
             display: block;
             margin: auto;
         }
