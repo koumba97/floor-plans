@@ -7,6 +7,7 @@
     height: 100%;
     width: $side-menu-w;
     height: calc(100vh - 40px * 2);
+    position: fixed;
 
     .list {
         display: flex;
@@ -20,5 +21,9 @@
             margin: auto;
             display: block;
         }
+    }
+
+    @media (max-width: $sm-breakpoint) {
+        display: none;
     }
 }

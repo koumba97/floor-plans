@@ -5,6 +5,11 @@ import Dropzone from 'react-dropzone';
 import { ImageFloorPlan } from '../../../types/ImageFloorPlan';
 import { useParams } from 'react-router';
 import { FloorPlanContext } from '../../../contexts/FloorPlanContext';
+import {
+    SM_BREAKPOINT,
+    MD_BREAKPOINT,
+    LG_BREAKPOINT
+} from '../../../Variables';
 
 interface Prop {
     src: File | null;
@@ -25,6 +30,7 @@ const ImageCropper = ({
     const [croppedImage, setCroppedImage] = useState('');
     const [zoom, setZoom] = useState(1.2);
     const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [canvasWidth, setCanvasWidth] = useState(500);
     const ROTATING_STEPS = 5;
     const editor = useRef<AvatarEditor>(null);
     const { currentFloorPlan } = useContext(FloorPlanContext);
@@ -49,6 +55,36 @@ const ImageCropper = ({
             setPosition(currentFloorPlan.image.position);
         }
     }, [currentFloorPlan, floorPlanId]);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const handleResize = () => {
+        const width = document.body.clientWidth;
+        const SM_CANVA_RATIO = 150;
+        const MD_CANVA_RATIO = 200;
+        const LG_CANVA_RATIO = 500;
+
+        console.log(width);
+
+        if (width < SM_BREAKPOINT) {
+            console.log('sm');
+            setCanvasWidth(width - SM_CANVA_RATIO);
+        } else if (width < MD_BREAKPOINT) {
+            console.log('md');
+            setCanvasWidth(width - MD_CANVA_RATIO);
+        } else if (width < 800) {
+            console.log('lg');
+            setCanvasWidth(width - LG_CANVA_RATIO);
+        } else {
+            setCanvasWidth(450);
+        }
+    };
 
     const resetValues = () => {
         setRotate(0);
@@ -100,14 +136,15 @@ const ImageCropper = ({
     return (
         <div className="image-cropper">
             <p className="instruction">
-                Drag the Floor Plan into the save window
+                Drag the Floor Plan into the save window {canvasWidth}
             </p>
             <div className="image-wrapper">
                 {src ? (
                     <AvatarEditor
+                        className="testtt"
                         ref={editor}
                         image={src}
-                        width={450}
+                        width={canvasWidth}
                         height={250}
                         color={[177, 177, 177, 0.6]}
                         scale={zoom}
@@ -124,7 +161,9 @@ const ImageCropper = ({
                         {({ getRootProps, getInputProps }) => (
                             <div {...getRootProps()}>
                                 <input {...getInputProps()} />
-                                <div className="image-blank"></div>
+                                <div className="image-blank">
+                                    <p>Drag the image or Browse to open</p>
+                                </div>
                             </div>
                         )}
                     </Dropzone>

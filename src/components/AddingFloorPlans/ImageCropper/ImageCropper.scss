@@ -7,6 +7,10 @@
         font-size: 8px;
     }
 
+    .testtt {
+        border: solid 3px;
+    }
+
     .image-wrapper {
         width: 500px;
         height: 300px;
@@ -99,6 +103,18 @@
             &:active {
                 scale: 0.9;
             }
+        }
+    }
+
+    @media (max-width: $md-breakpoint) {
+        .image-wrapper {
+            width: auto !important;
+        }
+        .testtt {
+            border: solid 3px;
+
+            display: block;
+            margin: auto;
         }
     }
 }

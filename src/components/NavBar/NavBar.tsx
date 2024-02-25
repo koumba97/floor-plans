@@ -13,6 +13,7 @@ const NavBar = () => {
             </div>
             <div className="right">
                 <i className="las la-bell alert"></i>
+                <i className="las la-bars side-menu-button"></i>
             </div>
         </nav>
     );

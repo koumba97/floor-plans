@@ -24,11 +24,22 @@
     }
     .right {
         display: flex;
+        align-items: center;
         gap: 20px;
 
         .alert {
             color: $brand-color;
             font-size: 20px;
+        }
+    }
+
+    .side-menu-button {
+        display: none;
+    }
+
+    @media (max-width: $sm-breakpoint) {
+        .side-menu-button {
+            display: block;
         }
     }
 }

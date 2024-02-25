@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import FloorPlan from '../../../types/FloorPlan';
 import './PlanList.scss';
 import { useContext } from 'react';
@@ -10,11 +10,12 @@ interface Prop {
 
 const PlanList = ({ plans }: Prop) => {
     const { currentFloorPlan } = useContext(FloorPlanContext);
+    const { floorPlanId } = useParams<string>();
 
     return (
         <div className="plan-list">
             <Link to={'/'}>
-                <div className={`item ${currentFloorPlan ? '' : 'active'}`}>
+                <div className={`item ${floorPlanId ? '' : 'active'}`}>
                     <div className="new-plan">
                         <i className="las la-plus"></i>
                     </div>
@@ -29,7 +30,7 @@ const PlanList = ({ plans }: Prop) => {
                             key={`item-list-${index}`}
                         >
                             <div
-                                className={`item ${currentFloorPlan && currentFloorPlan.id === plan.id ? 'active' : ''}`}
+                                className={`item ${currentFloorPlan && currentFloorPlan.id && floorPlanId === plan.id ? 'active' : ''}`}
                             >
                                 <div
                                     className="plan"

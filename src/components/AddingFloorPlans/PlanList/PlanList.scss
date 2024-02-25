@@ -2,7 +2,7 @@
 
 .plan-list {
     background-color: white;
-    width: 236px;
+    width: 200px;
     padding: 20px 0;
     overflow: scroll;
 
@@ -21,7 +21,7 @@
         .new-plan,
         .plan {
             color: $grey-200;
-            height: 120px;
+            height: 90px;
             background-position: center;
             background-size: cover;
             border-radius: 8px;
@@ -50,6 +50,27 @@
         }
         .plan {
             border: solid 2px;
+        }
+    }
+
+    @media (max-width: $md-breakpoint) {
+        width: 100%;
+        height: auto;
+        padding: 0;
+        display: flex;
+
+        .item {
+            border-right: none;
+            border-bottom: solid 3px transparent;
+            padding: 8px 8;
+            &.active {
+                border-color: $brand-color;
+            }
+            .new-plan,
+            .plan {
+                height: 70px;
+                width: 120px;
+            }
         }
     }
 }

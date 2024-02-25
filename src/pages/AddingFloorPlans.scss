@@ -7,4 +7,10 @@
         display: flex;
         gap: 20px;
     }
+
+    @media (max-width: $md-breakpoint) {
+        .content {
+            flex-direction: column;
+        }
+    }
 }
