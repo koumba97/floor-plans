@@ -37,7 +37,9 @@ const ImageCropper = ({
     }, [src]);
 
     useEffect(() => {
-        onClickSave();
+        if (submitted > 0) {
+            onClickSave();
+        }
     }, [submitted]);
 
     useEffect(() => {
@@ -45,7 +47,6 @@ const ImageCropper = ({
             setZoom(currentFloorPlan.image.zoom);
             setRotate(currentFloorPlan.image.rotate);
             setPosition(currentFloorPlan.image.position);
-            console.log(currentFloorPlan);
         }
     }, [currentFloorPlan, floorPlanId]);
 
@@ -91,6 +92,8 @@ const ImageCropper = ({
             };
 
             imageData(imgData);
+        } else {
+            alert('A floor plan image must be uploaded');
         }
     };
 

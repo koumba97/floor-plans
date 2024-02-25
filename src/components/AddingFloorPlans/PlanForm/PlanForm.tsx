@@ -18,9 +18,9 @@ import {
 import Button from '../../../ui/Button/Button';
 
 const defaultFormFields = {
-    name: 'a',
-    interiorSize: 'a',
-    exteriorSize: 'a',
+    name: '',
+    interiorSize: '',
+    exteriorSize: '',
     exteriorType: '' as ExteriorType,
     floorType: '' as FloorType,
     facingDirection: '' as FacingDirection
@@ -88,7 +88,7 @@ const PlanForm = () => {
             console.log('valid');
             return true;
         } else {
-            // display errors
+            alert('All the fields must be filled');
             console.log('not valid', errors, formFields);
             return false;
         }
@@ -125,6 +125,7 @@ const PlanForm = () => {
             });
 
             navigate(`/floor-plan/${id}`);
+            alert('The floor plan has been successfully added!');
         }
     };
 
@@ -139,11 +140,15 @@ const PlanForm = () => {
                 id: floorPlanId,
                 image: imageData
             });
+            alert('The floor plan has been successfully updated!');
         }
     };
 
     const handleDeleteFormPlan = () => {
-        if (floorPlanId) {
+        const resp = confirm(
+            'Are you sure you want to delete this floor plan?'
+        );
+        if (floorPlanId && resp) {
             deleteFloorPlan(floorPlanId);
             navigate('/');
         }
