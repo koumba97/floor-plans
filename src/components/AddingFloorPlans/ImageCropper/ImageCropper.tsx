@@ -8,7 +8,9 @@ import { FloorPlanContext } from '../../../contexts/FloorPlanContext';
 import {
     SM_BREAKPOINT,
     MD_BREAKPOINT,
-    LG_BREAKPOINT
+    LG_BREAKPOINT,
+    XL_BREAKPOINT,
+    MD2_BREAKPOINT
 } from '../../../Variables';
 
 interface Prop {
@@ -69,24 +71,19 @@ const ImageCropper = ({
         const SM_CANVA_RATIO = 150;
         const MD_CANVA_RATIO = 200;
         const LG_CANVA_RATIO = 500;
-
-        console.log(width);
+        const XL_CANVA_RATIO = 600;
+        const CANVAS_DEFAULT_W = 450;
 
         if (width < SM_BREAKPOINT) {
-            console.log('sm');
             setCanvasWidth(width - SM_CANVA_RATIO);
         } else if (SM_BREAKPOINT < width && width < MD_BREAKPOINT) {
-            console.log('md');
             setCanvasWidth(width - MD_CANVA_RATIO);
-        } else if (MD_BREAKPOINT < width && width < 800) {
-            console.log('lg');
+        } else if (MD_BREAKPOINT < width && width < MD2_BREAKPOINT) {
             setCanvasWidth(width - LG_CANVA_RATIO);
-        } else if (800 < width && width < 1030) {
-            console.log(800, 1030);
-            setCanvasWidth(width - 600);
-        } else if (1030 < width) {
-            console.log('+' + 1030);
-            setCanvasWidth(450);
+        } else if (MD2_BREAKPOINT < width && width < XL_BREAKPOINT) {
+            setCanvasWidth(width - XL_CANVA_RATIO);
+        } else if (XL_BREAKPOINT < width) {
+            setCanvasWidth(CANVAS_DEFAULT_W);
         }
     };
 

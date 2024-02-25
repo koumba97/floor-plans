@@ -85,11 +85,9 @@ const PlanForm = () => {
             }
         }
         if (errors.length === 0) {
-            console.log('valid');
             return true;
         } else {
             alert('All the fields must be filled');
-            console.log('not valid', errors, formFields);
             return false;
         }
     };

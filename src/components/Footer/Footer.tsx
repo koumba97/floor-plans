@@ -11,7 +11,7 @@ const Footer = () => {
                 <li>Contact Us</li>
             </ul>
         </footer>
-    )
-}
+    );
+};
 
 export default Footer;

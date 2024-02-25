@@ -9,12 +9,12 @@ const AppTemplate = () => {
     return (
         <div className="app-template">
             <SideMenu links={menuLinks} />
-            <div className='template-content'>
+            <div className="template-content">
                 <NavBar />
-                <div className='page'>
+                <div className="page">
                     <Outlet />
                 </div>
-                <Footer/>
+                <Footer />
             </div>
         </div>
     );
