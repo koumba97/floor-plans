@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react';
 import FloorPlan from '../types/FloorPlan';
-import { uniqId } from '../utils/UniqId';
 
 export const FloorPlanContext = createContext({
     floorPlans: [] as FloorPlan[],
@@ -32,7 +31,7 @@ export const FloorPlanProvider = ({ children }: FloorPlanProviderInterface) => {
         );
         const newFloorPlans = [...floorPlans];
         newFloorPlans[index] = floorPlan;
-        setFloorPlans((prevFloorPlans) => [...newFloorPlans]);
+        setFloorPlans([...newFloorPlans]);
         setCurrentFloorPlan(floorPlan);
     };
 
@@ -42,7 +41,7 @@ export const FloorPlanProvider = ({ children }: FloorPlanProviderInterface) => {
         );
         const newFloorPlans = [...floorPlans];
         newFloorPlans.splice(index, 1);
-        setFloorPlans((prevFloorPlans) => [...newFloorPlans]);
+        setFloorPlans([...newFloorPlans]);
         setCurrentFloorPlan(null);
     };
 

@@ -8,7 +8,6 @@ import { FloorPlanContext } from '../../../contexts/FloorPlanContext';
 import {
     SM_BREAKPOINT,
     MD_BREAKPOINT,
-    LG_BREAKPOINT,
     XL_BREAKPOINT,
     MD2_BREAKPOINT
 } from '../../../Variables';
@@ -29,7 +28,7 @@ const ImageCropper = ({
     submitted
 }: Prop) => {
     const [rotate, setRotate] = useState(0);
-    const [croppedImage, setCroppedImage] = useState('');
+    const [_croppedImage, setCroppedImage] = useState('');
     const [zoom, setZoom] = useState(1.2);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [canvasWidth, setCanvasWidth] = useState(500);
@@ -59,6 +58,7 @@ const ImageCropper = ({
     }, [currentFloorPlan, floorPlanId]);
 
     useEffect(() => {
+        handleResize();
         window.addEventListener('resize', handleResize);
 
         return () => {

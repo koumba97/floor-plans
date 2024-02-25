@@ -1,6 +1,4 @@
-import { placeholder } from '@babel/types';
 import './Select.scss';
-import { useEffect, useState } from 'react';
 
 interface Prop {
     options: { value: any; label: string }[];
@@ -21,8 +19,6 @@ const Select = ({
 }: Prop) => {
     const handleChange = (event: any) => {
         const { value } = event.target;
-
-        console.log(value);
 
         if (onChange) {
             onChange({ name: name, value: value });

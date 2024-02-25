@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Input from '../../../ui/Input/Input';
 import './PlanForm.scss';
 import Select from '../../../ui/Select/Select';
@@ -33,7 +33,7 @@ const PlanForm = () => {
     const [imageData, setImageData] = useState<ImageFloorPlan | undefined>(
         undefined
     );
-    const [imagePreview, setImagePreview] = useState('');
+    const [_imagePreview, setImagePreview] = useState('');
     let [submitImage, setSubmitImage] = useState(0);
     const {
         name,
